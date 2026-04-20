@@ -24,12 +24,57 @@ cv_workbench/
 └── requirements.txt
 ```
 
-## Jalankan
+## Cara Setup & Jalankan
+
+### 1) Ambil source code
+
+#### Opsi A - Clone dengan Git
 
 ```bash
+git clone https://github.com/mhdrefdi-ptr/computer-vision-pra-uts.git
+cd computer-vision-pra-uts
+```
+
+#### Opsi B - Download ZIP dari GitHub
+
+1. Buka repo GitHub
+2. Klik `Code` -> `Download ZIP`
+3. Extract ZIP
+4. Buka terminal di folder hasil extract
+
+### 2) Jalankan di Windows (PowerShell)
+
+```powershell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
+
+### 3) Jalankan di macOS (Terminal)
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+### 4) Jalankan di Linux (Terminal)
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+### 5) Buka aplikasi
+
+Setelah command jalan, buka URL Streamlit yang tampil di terminal (biasanya `http://localhost:8501`).
 
 ## Catatan Dataset
 
