@@ -1,46 +1,56 @@
-# Computer Vision Web App (Streamlit)
+# CV Workbench - Analisis Citra Pra-UTS
 
-Aplikasi web berbasis Python + Streamlit untuk demonstrasi tahapan computer vision:
+Aplikasi Streamlit berbasis Computer Vision klasik untuk kebutuhan eksperimen akademik:
 
-- Contrast Enhancement (CLAHE)
-- Thresholding
-- Harris Corner
-- Convolution: Gaussian Blur, Sobel, Prewitt
-- Morphology: Erosi, Dilasi, Filling Holes
-- Feature Matching: ORB
-- Evaluasi: Precision, Recall, F1-score, IoU
+- Dataset manager (download Kaggle + validasi struktur split)
+- Preprocessing (min-max, contrast enhancement, sharpening)
+- Teknik CV (thresholding + Harris corner)
+- Konvolusi (Gaussian, Sobel, Prewitt)
+- Morfologi (opening, closing, filling holes)
+- Feature matching (ORB + BFMatcher)
+- Evaluasi IoU
+- Manual calculation lab patch 15x15
+- Export hasil gambar, metrik, dan matriks
 
-## Struktur Folder
+## Struktur
 
 ```text
-computer-vision-pra-uts/
-├── app.py
-├── requirements.txt
-├── dataset/
-│   ├── images/
-│   └── masks/
-├── modules/
-└── utils/
+cv_workbench/
+├── streamlit_app.py
+├── pages/
+├── core/
+├── exports/
+├── datasets/
+└── requirements.txt
 ```
 
-## Jalankan Aplikasi
+## Jalankan
 
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
+streamlit run streamlit_app.py
 ```
 
-## Format Dataset
+## Catatan Dataset
 
-- Simpan gambar pada `dataset/images`
-- Subfolder di dalam `dataset/images` didukung (scan rekursif)
-- Simpan ground-truth mask pada `dataset/masks`
-- Nama file mask harus sama dengan gambar (contoh: `img1.jpg` dan `img1.png`)
-- Disarankan mirror struktur folder image ke mask (contoh: `images/kelas1/a.jpg` -> `masks/kelas1/a.png`)
+Secara default aplikasi mengunduh dataset:
 
-## Tab Aplikasi
+- `wanderdust/coin-images`
 
-- `Galeri Dataset`: preview gambar lokal dan pilih gambar untuk analisis
-- `Analisis Gambar`: tampilkan before/after semua tahap pemrosesan
-- `Feature Matching`: pilih 2 gambar lalu jalankan ORB matching
-- `Evaluasi`: hitung metrik segmentasi dari mask prediksi vs ground truth
+dan menyiapkannya pada folder lokal:
+
+- `datasets/coin-images`
+
+Ground truth mask disimpan terpisah dan persisten:
+
+- `datasets/coin-images-masks`
+
+Skema path mask:
+
+- Image: `datasets/coin-images/data/<split>/<class>/abc.jpg`
+- Mask: `datasets/coin-images-masks/<split>/<class>/abc.png`
+
+Dengan skema ini, saat dataset di-download ulang (termasuk force download/cache reset), folder mask tetap aman karena tidak berada di root dataset hasil download.
+Saat `Force download` dipilih di Dataset Manager, data image akan di-refresh dengan mode merge non-destruktif pada `datasets/coin-images`.
+
+Folder `datasets/` dan `exports/` tidak di-commit.

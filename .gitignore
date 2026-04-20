@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.env
+.streamlit/
+
+# keep dataset contents ignored by default
+datasets/
+# allow committed sample ground-truth masks only
+!datasets/
+datasets/*
+!datasets/coin-images-masks/
+datasets/coin-images-masks/*
+!datasets/coin-images-masks/train/
+datasets/coin-images-masks/train/*
+!datasets/coin-images-masks/train/1/
+!datasets/coin-images-masks/train/1/*.png
+exports/
+
+# legacy local dataset folder from previous baseline
+dataset/
