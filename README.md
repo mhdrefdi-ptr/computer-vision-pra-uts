@@ -9,7 +9,7 @@ Aplikasi Streamlit berbasis Computer Vision klasik untuk kebutuhan eksperimen ak
 - Morfologi (opening, closing, filling holes)
 - Feature matching (ORB + BFMatcher)
 - Evaluasi IoU
-- Manual calculation lab patch 15x15
+- Manual calculation lab patch 15x15 + manual Hamming untuk feature matching
 - Export hasil gambar, metrik, dan matriks
 
 ## Struktur

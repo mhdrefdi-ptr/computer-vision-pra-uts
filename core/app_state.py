@@ -18,6 +18,7 @@ DEFAULTS: dict[str, object] = {
     "last_results": {},
     "metrics_rows": [],
     "manual_patch": None,
+    "manual_matching_data": None,
     "last_export_dir": None,
 }
 

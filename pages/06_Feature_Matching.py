@@ -48,8 +48,22 @@ if st.button("Jalankan ORB + BFMatcher", type="primary"):
 
     if result["match_vis"] is None:
         st.warning("Descriptor tidak cukup untuk matching.")
+        st.session_state.manual_matching_data = None
     else:
         st.image(bgr_to_rgb(result["match_vis"]), caption=f"Jumlah match: {len(result['matches'])}")
+        if result["matches"] and result["descriptors_a"] is not None and result["descriptors_b"] is not None:
+            best = result["matches"][0]
+            desc_a = result["descriptors_a"][best.queryIdx]
+            desc_b = result["descriptors_b"][best.trainIdx]
+            st.session_state.manual_matching_data = {
+                "image_a": a,
+                "image_b": b,
+                "descriptor_a": desc_a.copy(),
+                "descriptor_b": desc_b.copy(),
+                "query_idx": int(best.queryIdx),
+                "train_idx": int(best.trainIdx),
+                "distance": float(best.distance),
+            }
 
     st.session_state.last_results["matching"] = {
         "image_a": a,
