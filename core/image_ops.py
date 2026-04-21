@@ -50,12 +50,29 @@ def normalize_to_uint8(image: np.ndarray) -> np.ndarray:
 
 
 def histogram_figure(before: np.ndarray, after: np.ndarray) -> plt.Figure:
-    b = to_gray(before).ravel()
-    a = to_gray(after).ravel()
+    b = np.asarray(to_gray(before), dtype=np.float32).ravel()
+    a = np.asarray(to_gray(after), dtype=np.float32).ravel()
+
+    # Defensive sanitization for cloud/runtime differences.
+    b = b[np.isfinite(b)]
+    a = a[np.isfinite(a)]
+    if b.size == 0:
+        b = np.array([0.0], dtype=np.float32)
+    if a.size == 0:
+        a = np.array([0.0], dtype=np.float32)
+    b = np.clip(b, 0, 255)
+    a = np.clip(a, 0, 255)
+
+    b_hist, b_bins = np.histogram(b, bins=32, range=(0, 255))
+    a_hist, a_bins = np.histogram(a, bins=32, range=(0, 255))
+    b_centers = (b_bins[:-1] + b_bins[1:]) / 2.0
+    a_centers = (a_bins[:-1] + a_bins[1:]) / 2.0
+    bar_w = (255 / 32) * 0.9
+
     fig, axes = plt.subplots(1, 2, figsize=(8, 3), dpi=120)
-    axes[0].hist(b, bins=32, color="steelblue")
+    axes[0].bar(b_centers, b_hist, width=bar_w, color="steelblue")
     axes[0].set_title("Histogram Before")
-    axes[1].hist(a, bins=32, color="darkorange")
+    axes[1].bar(a_centers, a_hist, width=bar_w, color="darkorange")
     axes[1].set_title("Histogram After")
     for ax in axes:
         ax.set_xlim(0, 255)
